@@ -1,0 +1,1 @@
+LINE_SERVER_FILE=$1 docker compose up

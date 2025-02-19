@@ -1,0 +1,1 @@
+LINE_SERVER_FILE=./sample.txt docker compose build

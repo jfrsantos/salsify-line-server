@@ -1,0 +1,6 @@
+THIS IS ASCII TEXT
+THE LINE 2 is GREAT
+I WISH LINE 3 was BETTER
+LINE 4 is not the LAST
+
+LINE 5 was empty but LINE 6 is not

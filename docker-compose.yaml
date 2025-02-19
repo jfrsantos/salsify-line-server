@@ -7,5 +7,6 @@ services:
     command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
     volumes:
       - ./line-server:/line-server
+      - ${LINE_SERVER_FILE}:/line-server/app/assets/files/sample.txt
     ports:
       - "3000:3000"
