@@ -1,0 +1,1 @@
+rm -r line-server/app/assets/cache 

@@ -9,7 +9,7 @@ class LinesController < ApplicationController
       render :plain => "OUT OF FILE\n", :status => :payload_too_large
     end
   end
-  def load_dependencies(file_service = FileService.new)
+  def load_dependencies(file_service = FileService.new('sample.txt', 3))
     @file_service ||= file_service
   end
 end
