@@ -1,2 +1,4 @@
 .DS_Store
 line-server/app/assets/cache
+line-server/app/tmp
+line-server/app/log
