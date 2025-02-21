@@ -24,6 +24,10 @@ describe FileService, type: :service do
         expect(file_service).to receive(:get_lines_naive).with(Rails.root.join(cache_path, 'sample_1.txt'), 1)
         file_service.get_line_text(5)
       end
+
+      it 'returns even if the line is empty at the end of the chunk' do
+        expect(file_service.get_line_text(9)).to eq("\n")
+      end
     end
 
     context 'when the line number is out of file' do

@@ -4,3 +4,7 @@ I WISH LINE 3 was BETTER
 LINE 4 is not the LAST
 
 LINE 5 was empty but LINE 6 is not
+LINE 7 is OK
+LINE 8 is also OK
+
+LINE 10 is alone because LINE 9 does not exist
