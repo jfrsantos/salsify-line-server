@@ -1,20 +1,20 @@
 class FileService
-  def initialize(filename, chunk_size)
+  def initialize(filename, filepath, cache_path, chunk_size)
     @filename = filename
+    @filepath = filepath
+    @cache_path = cache_path
     @chunk_size = chunk_size
   end
 
   def get_line_text(line)
     line_index = line - 1
-    file = Rails.root.join('app', 'assets', 'files', filename)
-
-    create_chunks(file, chunk_size)
+    file = Rails.root.join(filepath, filename)
+    create_chunks(file, chunk_size) unless has_chunks?(file)
     get_lines_from_chunk(line_index)
   end
 
   private
-
-  attr_reader :filename, :chunk_size
+  attr_reader :filename, :filepath, :cache_path, :chunk_size
 
   # This method reads the file line by line until it finds the desired line.
   # It is not efficient for high line number as every line until the desired one is read.
@@ -37,30 +37,30 @@ class FileService
   # Uses the naive approach but on smaller files that are split into chunks.
   # This method is more efficient for large files as it only reads the chunk that contains the desired line.
   def get_lines_from_chunk(line_index)
-    chunk_filename = Rails.root.join('app', 'assets', 'cache', chunk_filename(line_index/chunk_size))
+    chunk_filename = Rails.root.join(cache_path, chunk_filename(line_index/chunk_size))
     File.exist?(chunk_filename) ? get_lines_naive(chunk_filename, line_index % chunk_size) : raise(LoadError)
   end
 
   def has_chunks?(file)
-    File.exist?(Rails.root.join('app', 'assets', 'cache', chunk_filename(0)))
+    File.exist?(Rails.root.join(cache_path, chunk_filename(0)))
   end
 
   def create_chunks(input_file, chunk_size)
-    base_output_file_path = Rails.root.join('app', 'assets', 'cache')
+    base_output_file_path = Rails.root.join(cache_path)
     FileUtils.mkdir_p(base_output_file_path) # Ensure the directory exists
 
     File.open(input_file) do |file|
       file.each_slice(chunk_size).with_index do |lines, index|
         output_file_path = base_output_file_path.join(chunk_filename(index))
-        File.open(output_file_path, 'w') do |out_file|
-          lines.each_with_index do |line, line_index|
-            if line_index == lines.size - 1
-              out_file.print(line.chomp) # Remove newline from the last line
-            else
-              out_file.puts(line)
-            end
-          end
-        end
+        write_file(output_file_path, lines)
+      end
+    end
+  end
+
+  def write_file(filename, lines)
+    File.open(filename, 'w') do |out_file|
+      lines.each_with_index do |line, line_index|
+        out_file.puts(line)
       end
     end
   end
