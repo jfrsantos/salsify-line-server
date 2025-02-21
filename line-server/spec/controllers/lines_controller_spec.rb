@@ -10,7 +10,7 @@ describe LinesController, type: :controller do
     context "when the line number is within the file" do
       it "returns the line text" do
         get :get, params: { line_number: 1 }
-        expect(response.body).to eq("line text")
+        expect(response.body).to eq({"line" => "line text"}.to_json)
       end
     end
     context "when the line number is out of file" do
@@ -19,7 +19,7 @@ describe LinesController, type: :controller do
       end
       it "returns 'OUT OF FILE' message" do
         get :get, params: { line_number: 1 }
-        expect(response.body).to eq("OUT OF FILE\n")
+        expect(response.body).to eq({"error" => "OUT OF FILE"}.to_json)
       end
     end
   end

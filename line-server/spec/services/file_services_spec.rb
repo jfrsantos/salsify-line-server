@@ -2,9 +2,9 @@ require 'rails_helper'
 
 describe FileService, type: :service do
   let(:filename) { 'sample.txt' }
-  let(:filepath) { 'spec/fixtures' }
-  let(:cache_path) { 'spec/cache' }
-  let(:chunk_size) { 3 }
+  let(:filepath) { Rails.application.config.files_path }
+  let(:cache_path) { Rails.application.config.cache_path }
+  let(:chunk_size) { Rails.application.config.chunk_size }
   let(:file_service) { FileService.new(filename, filepath, cache_path, chunk_size) }
 
   before(:each) do

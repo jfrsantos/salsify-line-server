@@ -4,16 +4,17 @@ class LinesController < ApplicationController
     line = params[:line_number].to_i
     begin
       line_text = @file_service.get_line_text(line)
-      render :plain => line_text, :status => :ok
+      render :json => {line: line_text}, :status => :ok
     rescue LoadError
-      render :plain => "OUT OF FILE\n", :status => :payload_too_large
+      render :json => {error: "OUT OF FILE"}, :status => :payload_too_large
     end
   end
+
   def load_dependencies(file_service =
     FileService.new('sample.txt',
-      'app/assets/files',
-      'app/assets/cache',
-      3))
+      Rails.application.config.files_path,
+      Rails.application.config.cache_path,
+      Rails.application.config.chunk_size))
     @file_service ||= file_service
   end
 end

@@ -87,4 +87,8 @@ Rails.application.configure do
   #
   # Skip DNS rebinding protection for the default health check endpoint.
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
+
+  config.chunk_size = 3
+  config.files_path = 'app/assets/files'
+  config.cache_path = 'app/assets/cache'
 end

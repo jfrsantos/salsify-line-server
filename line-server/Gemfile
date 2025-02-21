@@ -42,6 +42,7 @@ gem "thruster", require: false
 
 gem 'rspec', '~> 3.13'
 gem 'rspec-rails', '~> 7.1', '>= 7.1.1'
+gem 'rubocop-rails', '~> 2.29', '>= 2.29.1'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
